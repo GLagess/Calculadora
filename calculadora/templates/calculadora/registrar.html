@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Criar Conta</title>
+  <link rel="stylesheet" href="{% static 'calculadora/css/calculos.css' %}">
+</head>
+<body>
+  <div class="register-box">
+    <h2>Criar Conta</h2>
+    <form method="post">{% csrf_token %}
+      {% for field in form %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}
+          <div class="erro">{{ field.errors|striptags }}</div>
+        {% endif %}
+      {% endfor %}
+      <button type="submit">Criar Conta</button>
+    </form>
+    <p>Já tem conta? <a href="{% url 'login' %}">Entrar</a></p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora Avançada</title>
+  <link rel="stylesheet" href="{% static 'calculadora/css/calculos.css' %}">
+</head>
+<body>
+  <div class="topbar">
+    <h1>Calculadora Avançada</h1>
+    <a href="{% url 'sair' %}" class="btn-sair">Sair</a>
+  </div>
+
+  <div class="calc-wrapper">
+    <div class="display" id="display">
+      {{ expressao }}{% if resultado %} = {{ resultado }}{% endif %}
+    </div>
+
+    <form method="post">{% csrf_token %}
+      <input type="hidden" name="expressao" id="expressao" value="{{ expressao }}">
+
+      <div class="calc-body">
+        <!-- coluna de números -->
+        <div class="nums">
+          {% for linha in linhas_numeros %}
+            {% for btn in linha %}
+              {% if btn %}
+                <button type="button" class="btn btn-num" onclick="append('{{ btn }}')">
+                  {{ btn }}
+                </button>
+              {% else %}
+                <div class="spacer"></div>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        </div>
+
+        <!-- coluna de operações -->
+        <div class="ops">
+          {% for op in operacoes %}
+            {% if op == 'C' %}
+              <button type="button" class="btn btn-clear" onclick="clearExpr()">C</button>
+            {% elif op == '=' %}
+              <button type="submit" class="btn btn-equals">=</button>
+            {% else %}
+              <button type="button" class="btn btn-op" onclick="append('{{ op }}')">
+                {{ op }}
+              </button>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <aside class="history">
+    <h2>Histórico</h2>
+    {% if historico %}
+      {% for op in historico %}
+        <div class="entry">
+          <span>{{ op.expressao }}</span>
+          <span>= {{ op.resultado }}</span>
+          <small>{{ op.data_hora|date:"d/m H:i" }}</small>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>Nenhum cálculo ainda.</p>
+    {% endif %}
+  </aside>
+
+  <script>
+    function append(v) {
+      const inp = document.getElementById('expressao');
+      inp.value += v;
+      document.getElementById('display').innerText = inp.value;
+    }
+    function clearExpr() {
+      document.getElementById('expressao').value = '';
+      document.getElementById('display').innerText = '';
+    }
+  </script>
+</body>
+</html>
