@@ -68,7 +68,7 @@ Instalação e Execução
 
 Clonar o repositório
 
-git clone https://github.com/SEU_USUARIO/projeto_calculadora.git
+git clone  https://github.com/GLagess/Calculadora.git
 cd projeto_calculadora
 
 Criar e ativar ambiente virtual
@@ -103,12 +103,4 @@ Cadastro: http://127.0.0.1:8000/registrar/
 Calculadora (após login): http://127.0.0.1:8000/calculadora/
 
 Admin: http://127.0.0.1:8000/admin/
-
-Contribuição
-
-Contribuições são bem-vindas! Sinta-se à vontade para submeter pull requests.
-
-Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
 
